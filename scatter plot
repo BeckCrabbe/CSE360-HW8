@@ -1,0 +1,50 @@
+import matplotlib.pyplot as plt
+
+# Coordinates
+coordinates = [
+    (77, 47), (106, 29), (222, 218), (213, 193), (272, 117),
+    (150, 176), (221, 148), (150, 147), (296, 66), (284, 210)
+]
+
+# Separate x and y coordinates
+x_coords = [coord[0] for coord in coordinates]
+y_coords = [coord[1] for coord in coordinates]
+
+# Plot
+plt.figure(figsize=(10, 6))
+plt.plot(x_coords, y_coords, 'bo')  # 'bo' stands for blue dots
+plt.title('Linear Plot of Coordinates')
+plt.xlabel('X Coordinates')
+plt.ylabel('Y Coordinates')
+plt.grid(True)
+plt.show()
+
+import math
+def calculate_duck_location(u, s_b):
+    duck_location = []
+
+    for data in s_b:
+        angle = data['angle']
+        size_blob = data['size_blob']
+        distance = data['distance']
+        center_coordinate = data['center_coordinate']
+
+        # Calculate the duck's location
+        x_diff = center_coordinate[0] - u[0]
+        y_diff = u[1] - center_coordinate[1]
+        # Calculate the angle of the duck's location
+        angle_duck_location = round(math.atan2(y_diff, x_diff) * (180 / math.pi), 2)
+
+        # Append the result to the duck_location list
+        duck_location.append({
+            'angle': angle_duck_location,
+            'size_blob': size_blob,
+            'distance': distance,
+            'center_coordinate': center_coordinate
+        })
+
+    return duck_location
+
+duck_location = calculate_duck_location(u, s_b)
+for location in duck_location:
+    print(location)
